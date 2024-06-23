@@ -16,7 +16,7 @@ yeah a bit of a tiny one, albeit. im gunna assume since you're working in gamema
 > this is the default callback for obj parsing, and it takes on the collections of data collected by the obj parsing function. if you want to write a custom ballback, it will need these same collections.
 
 **crocotile\_threedee\_correct\_to\_plus\_z\_up**(_raw\_vbo\_buffer_, _vertex\_format_)
-> this function transforms a crocotile3d obj file to be correct in a positive z-up view matrix. crocotile's up vector and handed-ness doesnt match gm so this is required for converting things. _raw\_vbo\_buffer_ takes a raw buffer of vertex data and _vertex\_format_ is the vertex format you use.
+> this function transforms a crocotile3d obj file to be correct in a positive z-up view matrix. crocotile's up vector and handed-ness doesnt match gm so this is required for converting things. _raw\_vbo\_buffer_ takes a raw buffer of vertex data and _vertex\_format_ is the vertex format you use, but assumes that format is the same as the included default. this function will also correct texture uvs.
 
 **crocotile\_threedee\_write\_buffer\_to\_obj\_file**(*raw\_vbo\_buffer*, *obj\_name*)
 > convert a buffer of raw vertex data into an obj file that crocotile can use as a model import. *raw\_vbo\_buffer* is the raw data and *obj\_name* is the name of the obj. **don't** include .obj in the name or you will end up with something.obj.obj which would be weird. **_note!_** crocotile3d has a scale of 1:16 pixels; so 16 pixels in gamemaker is a unit of 1 in crocotile 3d. you will need to downscale your obj when you import it.
@@ -31,3 +31,8 @@ yeah a bit of a tiny one, albeit. im gunna assume since you're working in gamema
 > whenever you do a non uniform scale transform on a vertex buffer, the winding order of the vertices will be the wrong way! uh oh! so if you scale something on like one axis by -1 or whatever then u will need this.
 
 i definitely plan to add more to this as i go, for example: rounding vertices off to be only integer positions and things like that.
+
+### some general notes
+- crocotile3d's upvector and handedness cannot change, even if you alter these in the settings the exported obj will respect the default crocotile camera. you will need conversions!
+- gamemaker is weird with the v component of uvs, you will generally end up pulling a 1-v to get the correct v coordinate; these functions handle it for u though.
+- i don't use materials so you're on your own there homie
