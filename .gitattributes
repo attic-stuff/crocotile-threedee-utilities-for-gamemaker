@@ -1,0 +1,7 @@
+# hook it up attribute bay beeeeeee
+* text=auto
+*.yy linguist-language=Json
+*.yyp linguist-language=Json
+*.gml text eol=crlf
+*.yy text eol=native
+*.yyp text eol=native
