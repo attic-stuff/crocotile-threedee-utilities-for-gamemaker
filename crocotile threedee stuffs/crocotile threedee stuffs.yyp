@@ -1,0 +1,40 @@
+{
+  "$GMProject":"",
+  "%Name":"crocotile threedee stuffs",
+  "AudioGroups":[
+    {"$GMAudioGroup":"","%Name":"audiogroup_default","name":"audiogroup_default","resourceType":"GMAudioGroup","resourceVersion":"2.0","targets":-1,},
+  ],
+  "configs":{
+    "children":[],
+    "name":"Default",
+  },
+  "defaultScriptType":1,
+  "Folders":[],
+  "IncludedFiles":[
+    {"$GMIncludedFile":"","%Name":"texture_1.png","CopyToMask":-1,"filePath":"datafiles","name":"texture_1.png","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
+    {"$GMIncludedFile":"","%Name":"viewcube.obj","CopyToMask":-1,"filePath":"datafiles","name":"viewcube.obj","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
+  ],
+  "isEcma":false,
+  "LibraryEmitters":[],
+  "MetaData":{
+    "IDEVersion":"2024.4.1.152",
+  },
+  "name":"crocotile threedee stuffs",
+  "resources":[
+    {"id":{"name":"load_kyle","path":"objects/load_kyle/load_kyle.yy",},},
+    {"id":{"name":"stage","path":"rooms/stage/stage.yy",},},
+    {"id":{"name":"crocotile_threedee_libary","path":"scripts/crocotile_threedee_libary/crocotile_threedee_libary.yy",},},
+    {"id":{"name":"vector_three_libary","path":"scripts/vector_three_libary/vector_three_libary.yy",},},
+    {"id":{"name":"crocotile_threedee_flat_sunlight_shader","path":"shaders/crocotile_threedee_flat_sunlight_shader/crocotile_threedee_flat_sunlight_shader.yy",},},
+    {"id":{"name":"crocotile_threedee_passthru_shader","path":"shaders/crocotile_threedee_passthru_shader/crocotile_threedee_passthru_shader.yy",},},
+  ],
+  "resourceType":"GMProject",
+  "resourceVersion":"2.0",
+  "RoomOrderNodes":[
+    {"roomId":{"name":"stage","path":"rooms/stage/stage.yy",},},
+  ],
+  "templateType":"game",
+  "TextureGroups":[
+    {"$GMTextureGroup":"","%Name":"Default","autocrop":true,"border":2,"compressFormat":"bz2","customOptions":"","directory":"","groupParent":null,"isScaled":true,"loadType":"default","mipsToGenerate":0,"name":"Default","resourceType":"GMTextureGroup","resourceVersion":"2.0","targets":-1,},
+  ],
+}

@@ -1,5 +1,5 @@
 /**
- *	calculate flat normals for a threedee model
+ * calculate flat normals for a threedee model
  * @param {Id.Buffer} raw_vbo_buffer the raw buffer of data for this model
  * @param {Id.VertexFormat} vertex_format the vertex format being used for this model
  * @param {Real} normals_attribute_number the index in the vertex format elements for the normals attribute
@@ -51,7 +51,7 @@ function crocotile_threedee_calculate_flat_normals(raw_vbo_buffer, vertex_format
 }
 
 /**
- *	reverse the vertex order for a threedee model
+ * reverse the vertex order for a threedee model
  * @param {Id.Buffer} raw_vbo_buffer the raw buffer of data for this model
  * @param {Id.VertexFormat} vertex_format the vertex format being used for this model
  */
@@ -79,7 +79,7 @@ function crocotile_threedee_reverse_vertex_order(raw_vbo_buffer, vertex_format) 
 }
 
 /**
- *	undoes the transform used to correct a model for +z up use!
+ * undoes the transform used to correct a model for +z up use!
  * @param {Id.Buffer} raw_vbo_buffer the raw buffer of data for this model
  * @param {Id.VertexFormat} vertex_format the vertex format being used for this model
  */
@@ -106,11 +106,11 @@ function crocotile_threedee_uncorrect_from_plus_z_up(raw_vbo_buffer, vertex_form
 }
 
 /**
- *	reverse the vertex order for a threedee model
+ * reverse the vertex order for a threedee model
  * @param {Id.Buffer} raw_vbo_buffer the raw buffer of data for this model
- * @param {String} name the name attribute for this obj, also used as the filename
+ * @param {String} obj_name the name attribute for this obj, also used as the filename
  */
-function crocotile_threedee_write_buffer_to_obj_file(raw_vbo_buffer, name) {
+function crocotile_threedee_write_buffer_to_obj_file(raw_vbo_buffer, obj_name) {
 	static read_vertex = function(raw_buffer) {	
 		var x_position = buffer_read(raw_buffer, buffer_f32);
 		var y_position = buffer_read(raw_buffer, buffer_f32);
@@ -160,7 +160,7 @@ function crocotile_threedee_write_buffer_to_obj_file(raw_vbo_buffer, name) {
 		array_push(triangle_faces, f);
 	}
 	
-	var file = file_text_open_write($"{name}.obj");
+	var file = file_text_open_write($"{obj_name}.obj");
 	file_text_write_string(file, "o Default");
 	file_text_writeln(file);
 	
@@ -179,7 +179,7 @@ function crocotile_threedee_write_buffer_to_obj_file(raw_vbo_buffer, name) {
 		file_text_writeln(file);
 	}
 	
-	file_text_write_string(file, $"g {name}");
+	file_text_write_string(file, $"g {obj_name}");
 	file_text_writeln(file);
 	file_text_write_string(file, "usemtl 0");
 	file_text_writeln(file);
@@ -194,11 +194,11 @@ function crocotile_threedee_write_buffer_to_obj_file(raw_vbo_buffer, name) {
 }
 
 /**
- *	converts an obj file from crocotile into a raw buffer
+ * converts an obj file from crocotile into a raw buffer
  * @param {String} file_name the file name, including path, to convert
- * @param {Id.VertexFormat} vertex_format the vertex format being used for this model
+ * @param {Function} [callback] a function to operate on the collection of obj data if you do not want a regular buffer
  */
-function crocotile_threedee_parse_obj_file(file_name, vertex_format)  {
+function crocotile_threedee_parse_obj_file(file_name, callback = crocotile_threedee_default_obj_parsing_callback)  {
 	
 	static split_up_triangle_faces = function(triangle_face_collection) {
 		var collection = string_split(triangle_face_collection, "/");
@@ -248,9 +248,21 @@ function crocotile_threedee_parse_obj_file(file_name, vertex_format)  {
 		}
 	}
 	file_text_close(obj_file);
+	return callback(vertex_positions, vertex_normals, vertex_colors, vertex_texture_coords, triangle_faces);
+}
 
+/**
+ * the default callback method for parsing crocotile3d obj files. returns a raw buffer of data
+ * @param {Array<Struct>} vertex_positions the array of each vertex position
+ * @param {Array<Struct>} vertex_normals the array of each vertex normal
+ * @param {Array<Struct>} vertex_colors the array of each vertex color
+ * @param {Array<Struct>} vertex_texture_coords the array of texture uvs
+ * @param {Array<Array<String>>} triangle_faces the array of triangle faces
+ * @returns {Id.Buffer}
+ */
+function crocotile_threedee_default_obj_parsing_callback(vertex_positions, vertex_normals, vertex_colors, vertex_texture_coords, triangle_faces) {
 	var number_of_vertices = array_length(triangle_faces);
-	var raw_vbo_buffer_size = vertex_format_get_info(vertex_format).stride * number_of_vertices;
+	var raw_vbo_buffer_size = vertex_format_get_info(crocotile_threedee_default_format).stride * number_of_vertices;
 	var raw_vbo_buffer = buffer_create(raw_vbo_buffer_size, buffer_fixed, 1);
 	for (var iteration = 0; iteration < number_of_vertices; iteration += 1) {
 		var this_vertex = triangle_faces[iteration];
@@ -274,11 +286,11 @@ function crocotile_threedee_parse_obj_file(file_name, vertex_format)  {
 		buffer_write(raw_vbo_buffer, buffer_f32, texture_coordinate_attribute. Y);	
 	}
 	buffer_seek(raw_vbo_buffer, buffer_seek_start, 0);
-	return raw_vbo_buffer;
+	return raw_vbo_buffer;	
 }
 
 /**
- *	utility function used only for parsing crocotile objs
+ * utility function used only for parsing crocotile objs
  * @param {Real} red red component
  * @param {Real} green green component
  * @param {Real} blue blue component
@@ -293,7 +305,7 @@ function crocotile_threedee_create_color(red, green, blue, alpha) {
 }
 
 /**
- *	corrects a crocotile model to conform to a +zup camera!
+ * corrects a crocotile model to conform to a +zup camera!
  * @param {Id.Buffer} raw_vbo_buffer the raw buffer of data for this model
  * @param {Id.VertexFormat} vertex_format the vertex format being used for this model
  */
