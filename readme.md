@@ -19,7 +19,7 @@ yeah a bit of a tiny one, albeit. im gunna assume since you're working in gamema
 > this function transforms a crocotile3d obj file to be correct in a positive z-up view matrix. crocotile's up vector and handed-ness doesnt match gm so this is required for converting things. _raw\_vbo\_buffer_ takes a raw buffer of vertex data and _vertex\_format_ is the vertex format you use.
 
 **crocotile\_threedee\_write\_buffer\_to\_obj\_file**(*raw\_vbo\_buffer*, *obj\_name*)
-> convertex a buffer of raw vertex data into an obj file that crocotile can use as a model import. *raw\_vbo\_buffer* is the raw data and *obj\_name* is the name of the obj. **don't** include .obj in the name or you will end up with something.obj.obj which would be weird. **_note!_** crocotile3d has a scale of 1:16 pixels; so 16 pixels in gamemaker is a unit of 1 in crocotile 3d. you will need to downscale your obj when you import it.
+> convert a buffer of raw vertex data into an obj file that crocotile can use as a model import. *raw\_vbo\_buffer* is the raw data and *obj\_name* is the name of the obj. **don't** include .obj in the name or you will end up with something.obj.obj which would be weird. **_note!_** crocotile3d has a scale of 1:16 pixels; so 16 pixels in gamemaker is a unit of 1 in crocotile 3d. you will need to downscale your obj when you import it.
 
 **crocotile\_threedee\_uncorrect\_from\_plus\_z\_up**(_raw\_vbo\_buffer_, _vertex\_format_)
 > run this sucker when you want to turn a positive z up model back to whatever wildness up vector that crocotile3d uses. probably wanna do this _before_ you turn it into a obj file.
