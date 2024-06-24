@@ -23,6 +23,7 @@
   "resources":[
     {"id":{"name":"load_kyle","path":"objects/load_kyle/load_kyle.yy",},},
     {"id":{"name":"stage","path":"rooms/stage/stage.yy",},},
+    {"id":{"name":"backend_libary","path":"scripts/backend_libary/backend_libary.yy",},},
     {"id":{"name":"crocotile_threedee_libary","path":"scripts/crocotile_threedee_libary/crocotile_threedee_libary.yy",},},
     {"id":{"name":"vector_three_libary","path":"scripts/vector_three_libary/vector_three_libary.yy",},},
     {"id":{"name":"crocotile_threedee_flat_sunlight_shader","path":"shaders/crocotile_threedee_flat_sunlight_shader/crocotile_threedee_flat_sunlight_shader.yy",},},
