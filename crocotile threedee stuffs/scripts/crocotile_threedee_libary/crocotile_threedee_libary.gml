@@ -106,11 +106,12 @@ function crocotile_threedee_uncorrect_from_plus_z_up(raw_vbo_buffer, vertex_form
 }
 
 /**
- * reverse the vertex order for a threedee model
+ * writes a raw buffer of vbo data to an obj file
  * @param {Id.Buffer} raw_vbo_buffer the raw buffer of data for this model
  * @param {String} obj_name the name attribute for this obj, also used as the filename
+ * @param {String} [material_name] the name attribute for this obj's material file
  */
-function crocotile_threedee_write_buffer_to_obj_file(raw_vbo_buffer, obj_name) {
+function crocotile_threedee_write_buffer_to_obj_file(raw_vbo_buffer, obj_name, material_name = "0") {
 	static read_vertex = function(raw_buffer) {	
 		var x_position = buffer_read(raw_buffer, buffer_f32);
 		var y_position = buffer_read(raw_buffer, buffer_f32);
@@ -181,7 +182,7 @@ function crocotile_threedee_write_buffer_to_obj_file(raw_vbo_buffer, obj_name) {
 	
 	file_text_write_string(file, $"g {obj_name}");
 	file_text_writeln(file);
-	file_text_write_string(file, "usemtl 0");
+	file_text_write_string(file, $"usemtl {material_name}");
 	file_text_writeln(file);
 	
 	repeat (array_length(triangle_faces)) {
