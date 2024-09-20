@@ -1,5 +1,5 @@
 {
-  "$GMScript":"",
+  "$GMScript":"v1",
   "%Name":"vector_three_libary",
   "isCompatibility":false,
   "isDnD":false,

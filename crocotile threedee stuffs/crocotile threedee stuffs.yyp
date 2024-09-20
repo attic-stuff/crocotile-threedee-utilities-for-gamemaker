@@ -11,19 +11,21 @@
   "defaultScriptType":1,
   "Folders":[],
   "IncludedFiles":[
+    {"$GMIncludedFile":"","%Name":"gridmap_example.txt","CopyToMask":-1,"filePath":"datafiles","name":"gridmap_example.txt","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"texture_1.png","CopyToMask":-1,"filePath":"datafiles","name":"texture_1.png","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"viewcube.obj","CopyToMask":-1,"filePath":"datafiles","name":"viewcube.obj","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
   ],
   "isEcma":false,
   "LibraryEmitters":[],
   "MetaData":{
-    "IDEVersion":"2024.4.1.152",
+    "IDEVersion":"2024.8.1.171",
   },
   "name":"crocotile threedee stuffs",
   "resources":[
     {"id":{"name":"load_kyle","path":"objects/load_kyle/load_kyle.yy",},},
     {"id":{"name":"stage","path":"rooms/stage/stage.yy",},},
     {"id":{"name":"backend_libary","path":"scripts/backend_libary/backend_libary.yy",},},
+    {"id":{"name":"crocotile_threedee_gridmap_libary","path":"scripts/crocotile_threedee_gridmap_libary/crocotile_threedee_gridmap_libary.yy",},},
     {"id":{"name":"crocotile_threedee_libary","path":"scripts/crocotile_threedee_libary/crocotile_threedee_libary.yy",},},
     {"id":{"name":"vector_three_libary","path":"scripts/vector_three_libary/vector_three_libary.yy",},},
     {"id":{"name":"crocotile_threedee_flat_sunlight_shader","path":"shaders/crocotile_threedee_flat_sunlight_shader/crocotile_threedee_flat_sunlight_shader.yy",},},

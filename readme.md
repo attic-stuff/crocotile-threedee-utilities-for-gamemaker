@@ -32,7 +32,42 @@ yeah a bit of a tiny one, albeit. im gunna assume since you're working in gamema
 
 i definitely plan to add more to this as i go, for example: rounding vertices off to be only integer positions and things like that.
 
+
 ### some general notes
 - crocotile3d's upvector and handedness cannot change, even if you alter these in the settings the exported obj will respect the default crocotile camera. you will need conversions!
 - gamemaker is weird with the v component of uvs, you will generally end up pulling a 1-v to get the correct v coordinate; these functions handle it for u though.
 - i don't use materials so you're on your own there homie
+
+### grid maps
+if you right click an object in the scene view of crocotile and select `export misc`, you will notice a little somethin' somethin' that says `export grid map.` grid maps are actually a feature of godot with a croc implementaiton. a godot grid map is almost identitcal to a gamemaker tilemap, only in threedee. for example in gamemaker you have a tilemap that is made of tile indices and each tile index maps that specific cell on the map to a specific tile on the tile set. in godot, you can have a grid map which is made out of indices that point to a specific mesh in a set of meshes.
+
+this is a really neat feature that you can use to do very cool things in your own threedee gamemaker games. like in my current project, i use the grid map data from crocotile to procedurally place tiles on a tilemap in gamemaker for collisions. to do that, i export the grid map from crocotile and then parse it in my gamemaker game with this function:
+
+**crocotile\_threedee\_parse\_gridmap\_file\_z_\up**(*file\_name*, *\[one_meter\]*, *\[as_list\]*, *\[z_direction\]*)
+> this function returns a constructor of holding the data about the gridmap.  
+> - *file\_name* is the path of the gridmap.txt file you wanna parse.  
+> - *one\_meter* is how many pixels is equal to one unit in crocotile. by default in crocotile and this libary we assume this is 16 pixels.  
+> - *as\_list* is a boolean value which determines whether or not the data is an array of coordinates with a tile index or as an array grid where each cell is the tile index, defaults to true and returns as list.   
+> - *z_direction* is whether or not your z up vector is 1 or -1, defaults to 1.
+
+this function parses the grid map data into two possible formats. a list-of-structs format like this:
+```
+data = [
+    { tile_x : 0, tile_y: 6, tile_z: 9, tile_index : 10 }
+    { tile_x : 4, tile_y: 2, tile_z: 0, tile_index : 20 }
+]
+```
+or as an array of arrays of arrays, aka a 3d array, like this:
+```
+data = [
+  [
+    [ 0, 4 ],
+    [ 2, 0 ]
+  ],
+  [
+    [ 0, 0 ],
+    [ 6, 9 ]
+  ]
+];
+```
+just like working with tilemap_get and tilemap_set in gamemaker, these are cell positions and indices, not pixel positions. but the constructor does have a method to figure out the world coordinates of a cell, which looks like `data.extract_world_position(x, y, z)` and returns the coordinates as a struct in world coordinates. this respects the sign of the world position too, so index 0,0,0 of a grid of map data can still translate back into negative world positions. the struct of positions is a recycled struct.

@@ -1,5 +1,5 @@
 {
-  "$GMScript":"",
+  "$GMScript":"v1",
   "%Name":"backend_libary",
   "isCompatibility":false,
   "isDnD":false,
