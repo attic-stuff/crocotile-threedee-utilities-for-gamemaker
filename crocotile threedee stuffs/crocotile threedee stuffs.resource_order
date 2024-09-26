@@ -3,7 +3,7 @@
   "ResourceOrderSettings":[
     {"name":"load_kyle","order":5,"path":"objects/load_kyle/load_kyle.yy",},
     {"name":"backend_libary","order":6,"path":"scripts/backend_libary/backend_libary.yy",},
-    {"name":"crocotile_threedee_gridmap_libary","order":8,"path":"scripts/crocotile_threedee_gridmap_libary/crocotile_threedee_gridmap_libary.yy",},
+    {"name":"crocotile_threedee_gridmap_libary","order":7,"path":"scripts/crocotile_threedee_gridmap_libary/crocotile_threedee_gridmap_libary.yy",},
     {"name":"crocotile_threedee_libary","order":3,"path":"scripts/crocotile_threedee_libary/crocotile_threedee_libary.yy",},
     {"name":"vector_three_libary","order":4,"path":"scripts/vector_three_libary/vector_three_libary.yy",},
     {"name":"crocotile_threedee_flat_sunlight_shader","order":2,"path":"shaders/crocotile_threedee_flat_sunlight_shader/crocotile_threedee_flat_sunlight_shader.yy",},
