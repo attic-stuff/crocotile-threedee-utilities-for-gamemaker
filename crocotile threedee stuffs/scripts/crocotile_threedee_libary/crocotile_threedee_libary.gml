@@ -132,65 +132,77 @@ function crocotile_threedee_write_buffer_to_obj_file(raw_vbo_buffer, obj_name, m
 		return { v, vt, vn };
 	}
 	
-	var vertex_positions = [];
-	var vertex_texture_coordinates = [];
-	var vertex_normals = [];
-	var triangle_faces = [];
+	var vertex_positions = ds_list_create();
+	var vertex_texture_coordinates = ds_list_create();
+	var vertex_normals = ds_list_create();
+	var triangle_faces = ds_list_create();
 	
 	var raw_vbo_buffer_size = buffer_get_size(raw_vbo_buffer);
 	buffer_seek(raw_vbo_buffer, buffer_seek_start, 0);
 	
 	while (buffer_tell(raw_vbo_buffer) < raw_vbo_buffer_size) {
+		
+		var tell = buffer_tell(raw_vbo_buffer);
+		
 		var point_a = read_vertex(raw_vbo_buffer);
 		var point_b = read_vertex(raw_vbo_buffer);
 		var point_c = read_vertex(raw_vbo_buffer);	
-		
-		var point_a_vertex_positions_index = int64(array_push_if(vertex_positions, point_a.v) + 1);
-		var point_b_vertex_positions_index = int64(array_push_if(vertex_positions, point_b.v) + 1);
-		var point_c_vertex_positions_index = int64(array_push_if(vertex_positions, point_c.v) + 1);		
-		
-		var point_a_vertex_texture_coordinates_index = int64(array_push_if(vertex_texture_coordinates, point_a.vt) + 1);
-		var point_b_vertex_texture_coordinates_index = int64(array_push_if(vertex_texture_coordinates, point_b.vt) + 1);
-		var point_c_vertex_texture_coordinates_index = int64(array_push_if(vertex_texture_coordinates, point_c.vt) + 1);		
-		
-		var point_a_vertex_normals_index = int64(array_push_if(vertex_normals, point_a.vn) + 1);
-		var point_b_vertex_normals_index = int64(array_push_if(vertex_normals, point_b.vn) + 1);
-		var point_c_vertex_normals_index = int64(array_push_if(vertex_normals, point_c.vn) + 1);
-		
-		var f = $"f {point_a_vertex_positions_index}/{point_a_vertex_texture_coordinates_index}/{point_a_vertex_normals_index} {point_b_vertex_positions_index}/{point_b_vertex_texture_coordinates_index}/{point_b_vertex_normals_index} {point_c_vertex_positions_index}/{point_c_vertex_texture_coordinates_index}/{point_c_vertex_normals_index}";
-		array_push(triangle_faces, f);
+	
+		var point_a_vertex_positions_index = int64(ds_list_add_if(vertex_positions, point_a.v) + 1);
+		var point_b_vertex_positions_index = int64(ds_list_add_if(vertex_positions, point_b.v) + 1);
+		var point_c_vertex_positions_index = int64(ds_list_add_if(vertex_positions, point_c.v) + 1);		
+	
+		var point_a_vertex_texture_coordinates_index = int64(ds_list_add_if(vertex_texture_coordinates, point_a.vt) + 1);
+		var point_b_vertex_texture_coordinates_index = int64(ds_list_add_if(vertex_texture_coordinates, point_b.vt) + 1);
+		var point_c_vertex_texture_coordinates_index = int64(ds_list_add_if(vertex_texture_coordinates, point_c.vt) + 1);
+	
+		var point_a_vertex_normals_index = int64(ds_list_add_if(vertex_normals, point_a.vn) + 1);
+		var point_b_vertex_normals_index = int64(ds_list_add_if(vertex_normals, point_b.vn) + 1);
+		var point_c_vertex_normals_index = int64(ds_list_add_if(vertex_normals, point_c.vn) + 1);	
+	
+		var f = "f "
+		f += $"{point_a_vertex_positions_index}/{point_a_vertex_texture_coordinates_index}/{point_a_vertex_normals_index} ";
+		f += $"{point_b_vertex_positions_index}/{point_b_vertex_texture_coordinates_index}/{point_b_vertex_normals_index} ";
+		f += $"{point_c_vertex_positions_index}/{point_c_vertex_texture_coordinates_index}/{point_c_vertex_normals_index}";
+		ds_list_add(triangle_faces, f);
 	}
 	
-	var file = file_text_open_write($"{obj_name}.obj");
-	file_text_write_string(file, "o Default");
-	file_text_writeln(file);
+	var obj_file = buffer_create(1, buffer_grow, 1);
+	buffer_write(obj_file, buffer_text, $"o Default\n");
 	
-	repeat (array_length(vertex_positions)) {
-		file_text_write_string(file, array_shift(vertex_positions));
-		file_text_writeln(file);
+	var list_length = 0;
+	
+	list_length = ds_list_size(vertex_positions);
+	for (var index = 0; index < list_length; index += 1) {
+		buffer_write(obj_file, buffer_text, vertex_positions[| index] + "\n");	
 	}
 	
-	repeat (array_length(vertex_texture_coordinates)) {
-		file_text_write_string(file, array_shift(vertex_texture_coordinates));
-		file_text_writeln(file);
+	list_length = ds_list_size(vertex_texture_coordinates);
+	for (var index = 0; index < list_length; index += 1) {
+		buffer_write(obj_file, buffer_text, vertex_texture_coordinates[| index] + "\n");	
 	}
 	
-	repeat (array_length(vertex_normals)) {
-		file_text_write_string(file, array_shift(vertex_normals));
-		file_text_writeln(file);
+	list_length = ds_list_size(vertex_normals);
+	for (var index = 0; index < list_length; index += 1) {
+		buffer_write(obj_file, buffer_text, vertex_normals[| index] + "\n");
 	}
 	
-	file_text_write_string(file, $"g {obj_name}");
-	file_text_writeln(file);
-	file_text_write_string(file, $"usemtl {material_name}");
-	file_text_writeln(file);
-	
-	repeat (array_length(triangle_faces)) {
-		file_text_write_string(file, array_shift(triangle_faces));
-		file_text_writeln(file);
+	buffer_write(obj_file, buffer_text, $"g {obj_name}\nusemtl {materials_name}\n");
+
+	list_length = ds_list_size(triangle_faces);
+	for (var index = 0; index < list_length; index += 1) {
+		buffer_write(obj_file, buffer_text, triangle_faces[| index] + "\n");
 	}
 	
-	file_text_close(file);
+	buffer_save(obj_file, $"{obj_name}.obj");
+	
+	buffer_delete(obj_file);
+	
+	ds_list_destroy(vertex_positions);
+	ds_list_destroy(vertex_texture_coordinates);
+	ds_list_destroy(vertex_normals);
+	ds_list_destroy(triangle_faces);
+	
 	return true;
 }
 

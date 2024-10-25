@@ -21,3 +21,17 @@ function array_push_if(array, value) {
 	}
 	return index;
 }
+
+/**
+ * pushes something to an ds list if that something doesnt already exist on the ds_list
+ * @param {Id.DsList} ds_list the array to push to
+ * @param {Any} value the value to push to the ds list
+ */
+function ds_list_add_if(ds_list, value) {
+	var index = ds_list_find_index(ds_list, value);	
+	if (index == -1) {
+		ds_list_add(ds_list, value);
+		return ds_list_size(ds_list) - 1;
+	}
+	return index;
+}

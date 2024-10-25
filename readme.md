@@ -37,6 +37,7 @@ i definitely plan to add more to this as i go, for example: rounding vertices of
 - crocotile3d's upvector and handedness cannot change, even if you alter these in the settings the exported obj will respect the default crocotile camera. you will need conversions!
 - gamemaker is weird with the v component of uvs, you will generally end up pulling a 1-v to get the correct v coordinate; these functions handle it for u though.
 - i don't use materials so you're on your own there homie
+- i am pretty sure crocotile treats every tile as a single batch submission, which means trying to convert a huge ass vertex buffer into an obj and then opening it in crocotile could light your computer on fire. a obj with 437,400 is like almost 10 gigs of trouble in crocotile.
 
 ### grid maps
 if you right click an object in the scene view of crocotile and select `export misc`, you will notice a little somethin' somethin' that says `export grid map.` grid maps are actually a feature of godot with a croc implementaiton. a godot grid map is almost identitcal to a gamemaker tilemap, only in threedee. for example in gamemaker you have a tilemap that is made of tile indices and each tile index maps that specific cell on the map to a specific tile on the tile set. in godot, you can have a grid map which is made out of indices that point to a specific mesh in a set of meshes.
