@@ -230,7 +230,7 @@ function crocotile_threedee_parse_obj_file(file_name, callback = crocotile_three
 	var obj_file = file_text_open_read(file_name);
 	
 	while (file_text_eof(obj_file) == false) {
-		var this_line = file_text_readln(obj_file);
+		var this_line = string_trim(file_text_readln(obj_file));
 		var data_collection = string_split(this_line, " ");
 		
 		if (data_collection[0] ==  "v" or data_collection[0] == "vt" or data_collection[0] =="vn") {

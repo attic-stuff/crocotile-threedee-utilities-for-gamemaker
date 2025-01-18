@@ -77,18 +77,17 @@ function crocotile_threedee_gridmap_grid(gridmap_json_object, one_meter, z_direc
  * @param {String} file_name the name of the text file containing the gridmap
  * @param {Real} one_meter the number of pixels equal to one meter, as set in crocotile
  * @param {Bool} as_list whether or not to return the data as a list or a grid
- * @param {Real} z_direction which direction your upvector goes on z, 1 or -1
  */
-function crocotile_threedee_parse_gridmap_file_z_up(file_name, one_meter = 16, as_list = true, z_direction = 1) {
+function crocotile_threedee_parse_gridmap_file_z_up(file_name, one_meter = 16, as_list = true) {
 	var gridmap_file = buffer_load(file_name);
 	var gridmap_text = buffer_read(gridmap_file, buffer_text);
 	var gridmap_json_object = json_parse(gridmap_text);
 	buffer_delete(gridmap_file);
 	var gridmap_object = undefined;
 	if (as_list == true) {
-		gridmap_object = new crocotile_threedee_gridmap_list(gridmap_json_object, one_meter, z_direction);
+		gridmap_object = new crocotile_threedee_gridmap_list(gridmap_json_object, one_meter, 1);
 	} else {
-		gridmap_object = new crocotile_threedee_gridmap_grid(gridmap_json_object, one_meter, z_direction);
+		gridmap_object = new crocotile_threedee_gridmap_grid(gridmap_json_object, one_meter, 1);
 	}
 	return gridmap_object;
 }
