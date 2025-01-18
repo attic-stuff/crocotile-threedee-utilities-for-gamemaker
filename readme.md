@@ -44,7 +44,7 @@ if you right click an object in the scene view of crocotile and select `export m
 
 this is a really neat feature that you can use to do very cool things in your own threedee gamemaker games. like in my current project, i use the grid map data from crocotile to procedurally place tiles on a tilemap in gamemaker for collisions. to do that, i export the grid map from crocotile and then parse it in my gamemaker game with this function:
 
-**crocotile\_threedee\_parse\_gridmap\_file\_z_\up**(*file\_name*, *\[one_meter\]*, *\[as_list\]*, *\[z_direction\]*)
+**crocotile\_threedee\_parse\_gridmap\_file\_z\_up**(*file\_name*, *\[one_meter\]*, *\[as_list\]*)
 > this function returns a constructor of holding the data about the gridmap.  
 > - *file\_name* is the path of the gridmap.txt file you wanna parse.  
 > - *one\_meter* is how many pixels is equal to one unit in crocotile. by default in crocotile and this libary we assume this is 16 pixels.  
